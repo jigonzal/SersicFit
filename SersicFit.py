@@ -117,7 +117,12 @@ def lnprob(theta, measured_flux,sigma):
     lp = lnprior(theta)
     if not np.isfinite(lp):
         return -np.inf
-    return lp + lnlike(theta, measured_flux,sigma)
+
+    lnMeasured = lnlike(theta, measured_flux,sigma)
+    if not np.isfinite(lnMeasured):
+	return -np.inf
+
+    return lp + lnMeasured
 
 def Sersic2D(Array, amplitude, r_eff, n, x_0, y_0, ellip, theta):
 	"""Two dimensional Sersic profile function."""
